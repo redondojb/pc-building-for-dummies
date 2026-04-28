@@ -1,28 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>PC Building for Dummies</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>My Website</h1>
-        <p>A simple multi-page site</p>
-    </header>
-    <nav>
-        <a href="index.html">Home</a> |
-        <a href="about.html">About</a> |
-        <a href="contact.html">Contact</a>
+
+    <nav class="navbar">
+        <div class="navbar-container">
+            <h2>PC Building for Dummies</h2>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contacts.html">Contacts</a></li>
+                <li><a href="services.html">Services</a></li>
+            </ul>
+        </div>
     </nav>
-    <hr>
-    <main>
-        <h2>Welcome!</h2>
-        <p>Edit this text to introduce your site.</p>
+
+    <main class="main-content">
+        <h1>PC Building for Dummies</h1>
+
+        <p class="highlight-text">
+            Building your own computer is the adult version of playing with LEGOs.
+        </p>
+
+        <p>
+            Start with choosing the right CPU, motherboard, RAM, GPU, storage, power supply, and case. 
+            Then follow the step-by-step assembly process, its easier than it looks!
+        </p>
+
+        <section class="price-tool">
+            <h2>Find Stores For Your Budget</h2>
+            <p>Enter your maximum budget (in PHP) and we'll suggest good places to shop:</p>
+            
+            <label for="budget">Maximum Budget (₱):</label><br>
+            <input type="number" id="budget" placeholder="e.g. 50000" min="10000">
+            <button type="button" id="findBtn">Find Stores</button>
+
+            <div id="store-results" class="results"></div>
+        </section>
     </main>
-    <footer>
-        <p>&copy; 2026 My Website</p>
-    </footer>
+
+    <script>
+        document.getElementById("findBtn").addEventListener("click", suggestStores);
+
+        function suggestStores() {
+            const budgetInput = document.getElementById('budget').value;
+            const budget = parseInt(budgetInput);
+            const resultsDiv = document.getElementById('store-results');
+
+            resultsDiv.innerHTML = '';
+
+            if (!budget || budget < 10000) {
+                resultsDiv.innerHTML = '<p style="color:red;">Please enter a budget of at least ₱10,000.</p>';
+                return;
+            }
+
+            let stores = [];
+
+            if (budget >= 150000) {
+                stores = [
+                    { name: "Lazada Premium / Flagship Stores", desc: "High-end components, fast shipping" },
+                    { name: "PC Express", desc: "Premium builds & custom PCs" },
+                    { name: "Datablitz", desc: "Great selection of GPUs and CPUs" }
+                ];
+            } 
+            else if (budget >= 80000) {
+                stores = [
+                    { name: "PC Express", desc: "Good balance of price and quality" },
+                    { name: "Lazada / Shopee Official Stores", desc: "Wide selection with vouchers" },
+                    { name: "Octagon Computer", desc: "Reliable local shop" }
+                ];
+            } 
+            else if (budget >= 40000) {
+                stores = [
+                    { name: "Shopee / Lazada", desc: "Best for budget builds with discounts" },
+                    { name: "Gilmore Computer Center", desc: "Great for second-hand & affordable parts" },
+                    { name: "PC Hub", desc: "Budget-friendly components" }
+                ];
+            } 
+            else {
+                stores = [
+                    { name: "Shopee Budget Sellers", desc: "Entry-level parts & used components" },
+                    { name: "Local Computer Shops", desc: "Check nearby shops in Quiapo or Baclaran" },
+                    { name: "Montera", desc: "Affordable and high quality parts"}
+                ];
+            }
+
+            let html = `<h3>Recommended Stores for ₱${budget.toLocaleString()} budget:</h3><ul>`;
+            stores.forEach(store => {
+                html += `<li><strong>${store.name}</strong> — ${store.desc}</li>`;
+            });
+            html += '</ul>';
+
+            resultsDiv.innerHTML = html;
+        }
+    </script>
+
 </body>
 </html>
